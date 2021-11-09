@@ -61,6 +61,10 @@ $app->singleton(
 
 $app->configure('app');
 
+
+//elastic search
+$app->configure("es");
+$app->configure("scout");
 /*
 |--------------------------------------------------------------------------
 | Register Middleware
@@ -76,9 +80,9 @@ $app->configure('app');
 //     App\Http\Middleware\ExampleMiddleware::class
 // ]);
 
-// $app->routeMiddleware([
-//     'auth' => App\Http\Middleware\Authenticate::class,
-// ]);
+ $app->routeMiddleware([
+     'auth' => App\Http\Middleware\Authenticate::class
+ ]);
 
 /*
 |--------------------------------------------------------------------------
@@ -91,9 +95,17 @@ $app->configure('app');
 |
 */
 
+$app->withFacades();
+$app->withEloquent();
+
+
 // $app->register(App\Providers\AppServiceProvider::class);
-// $app->register(App\Providers\AuthServiceProvider::class);
+$app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
+$app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Irazasyed\Larasupport\Providers\ArtisanServiceProvider::class);
+$app->register(Basemkhirat\Elasticsearch\ElasticsearchServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------

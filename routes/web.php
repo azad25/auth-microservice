@@ -16,3 +16,25 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+/*
+ *
+ * UNAUTHENTICATED ROUTES
+ *
+ */
+$router->post('/login', 'AuthController@login');
+$router->post('/register', 'AuthController@register');
+/*
+ *
+ * AUTHENTICATED ROUTES
+ *
+ */
+$router->group(
+    [
+        'middleware' => 'auth',
+    ], function ($router) {
+    $router->post('/logout', 'AuthController@logout' );
+    $router->get('/refresh', 'AuthController@refresh' );
+    $router->post('refresh', 'AuthController@refresh' );
+});
+
+
